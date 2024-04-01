@@ -1,0 +1,11 @@
+//-------------------Suppliers-----------------------
+
+http://127.0.0.1:3002/api/supplier/registerSupplier
+
+http://127.0.0.1:3002/api/supplier/getSuppliers
+
+http://127.0.0.1:3002/api/supplier/getSupplier/:id
+
+http://127.0.0.1:3002/api/supplier/modifySupplier/:id
+
+//-----------------------------------------------------
