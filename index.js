@@ -19,6 +19,12 @@ app.use('/api/supplier/', routerProveedores);
 app.use('/api/purchaseOrder/', routerPurchaseOrders);
 app.use('/api/products/', routerProducts);
 
+app.get('/test', async (req, res) => {
+
+  res.status(200).json({"message":"ok"});
+
+});
+
 
 // Iniciar el servidor
 app.listen(PORT, () => {
