@@ -1,4 +1,4 @@
-//-------------------Suppliers-----------------------
+//-----------------------------Suppliers-----------------------
 
 http://127.0.0.1:3002/api/supplier/registerSupplier
 
@@ -9,3 +9,13 @@ http://127.0.0.1:3002/api/supplier/getSupplier/:id
 http://127.0.0.1:3002/api/supplier/modifySupplier/:id
 
 //-----------------------------------------------------
+
+//--------------------Órdenes de Compra de Productos-------------
+
+http://127.0.0.1:3002/api/purchaseOrder/registerPurchaseOrder
+
+http://127.0.0.1:3002/api/purchaseOrder/getPurchaseOrders
+
+http://127.0.0.1:3002/api/purchaseOrder/getPuchaseOrder/:id
+
+http://127.0.0.1:3002/api/purchaseOrder/modifyPurchaseOrder/:id

@@ -5,12 +5,12 @@ const nodemailer = require('nodemailer');
 const axios = require('axios');
 
 //Router
-const routerProveedores = express.Router();
+const routerProducts = express.Router();
 
 //-----------------------------------------------------------------------------------
 
 // Middleware para procesar solicitudes con datos JSON
-routerProveedores.use(express.json());
+routerProducts.use(express.json());
 
 
 //------------------Dirección de nodos-----------------:
@@ -20,23 +20,12 @@ const {direccionNodoConsenso}=require('../variables');
 
 //----------------------------------Peticiones---------------------
 
-//Registrar Supplier
+//Registrar un producto
 
-routerProveedores.post('/registerSupplier', async (req, res) => {
-
-    const { name, email, phone, ruc } = req.body;
-
-    const lastSupplier = {
-        name: name,
-        email: email,
-        phone: phone,
-        ruc: ruc
-    };
+routerProducts.post('/registerProduct', async (req, res) => {
 
     //Enviar informacion a los nodos
-    response1 = await axios.post(`${direccionNodoConsenso}/api/logistica/suppliers/newSupplier`, lastSupplier);
-
-
+    response1 = await axios.post(`${direccionNodoConsenso}/api/logistica/products/newProduct`, req.body);
 
     //-------------------------------Final-----------------------------
 
@@ -49,23 +38,26 @@ routerProveedores.post('/registerSupplier', async (req, res) => {
 
 });
 
-//Obtener todos los suppliers
 
-routerProveedores.get('/getSuppliers', async (req, res) => {
 
-    response1 = await axios.get(`${direccionNodoConsenso}/api/logistica/suppliers/getAllSuppliers`);
+routerProducts.get('/getProducts', async (req, res) => {
+
+    response1 = await axios.get(`${direccionNodoConsenso}/api/logistica/products/getAllProducts`);
 
     res.status(200).json(response1.data);
 
 });
 
-//Obtener un proveedor en Específico:
 
-routerProveedores.get('/getSupplier/:id', async (req, res) => {
+
+routerProducts.get('/getProduct/:id', async (req, res) => {
 
     const id=req.params.id;
 
-    response1 = await axios.get(`${direccionNodoConsenso}/api/logistica/suppliers/Supplier/${id}`);
+    response1 = await axios.get(`${direccionNodoConsenso}/api/logistica/products/Product/${id}`);
+
+    console.log("Enviando datos");
+    console.log(response1.data);
 
     res.status(200).json(response1.data);
 
@@ -74,11 +66,11 @@ routerProveedores.get('/getSupplier/:id', async (req, res) => {
 
 //Modify Supplier
 
-routerProveedores.put('/modifySupplier/:id', async (req, res) => {
+routerProducts.put('/modifyProduct/:id', async (req, res) => {
 
     const id=req.params.id;
 
-    response1 = await axios.put(`${direccionNodoConsenso}/api/logistica/suppliers/ModifySupplier/${id}`,req.body);
+    response1 = await axios.put(`${direccionNodoConsenso}/api/logistica/products/ModifyProduct/${id}`,req.body);
     
     if (response1.status = 200) {
         console.log("Los servidores recibieron la información de manera correcta");
@@ -89,5 +81,4 @@ routerProveedores.put('/modifySupplier/:id', async (req, res) => {
 
 });
 
-
-module.exports.routerProveedores = routerProveedores;
+module.exports.routerProducts = routerProducts;

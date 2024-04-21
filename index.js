@@ -9,12 +9,16 @@ const {routerRegUser}=require('./Routers/register.js');
 const {routerGestionUsuario}=require('./Routers/gestionUsuarios.js');
 */
 const {routerProveedores}=require('./Routers/supplier');
-
+const {routerPurchaseOrders}=require('./Routers/purchaseOrder');
+const {routerProducts}=require('./Routers/products');
 
 app.use(cors());
 
 //Routers
 app.use('/api/supplier/', routerProveedores);
+app.use('/api/purchaseOrder/', routerPurchaseOrders);
+app.use('/api/products/', routerProducts);
+
 
 // Iniciar el servidor
 app.listen(PORT, () => {
