@@ -18,6 +18,12 @@ routerProveedores.use(express.json());
 const {direccionNodoConsenso}=require('../variables');
 
 
+//--------------------Configurar Api Key--------------------
+
+const headers = {
+    'api-key': 'Password783'
+  };
+
 //----------------------------------Peticiones---------------------
 
 //Registrar Supplier
@@ -34,7 +40,7 @@ routerProveedores.post('/registerSupplier', async (req, res) => {
     };
 
     //Enviar informacion a los nodos
-    response1 = await axios.post(`${direccionNodoConsenso}/api/logistica/suppliers/newSupplier`, lastSupplier);
+    response1 = await axios.post(`${direccionNodoConsenso}/api/logistica/suppliers/newSupplier`, lastSupplier,{ headers });
 
 
 
@@ -53,7 +59,7 @@ routerProveedores.post('/registerSupplier', async (req, res) => {
 
 routerProveedores.get('/getSuppliers', async (req, res) => {
 
-    response1 = await axios.get(`${direccionNodoConsenso}/api/logistica/suppliers/getAllSuppliers`);
+    response1 = await axios.get(`${direccionNodoConsenso}/api/logistica/suppliers/getAllSuppliers`,{ headers });
 
     res.status(200).json(response1.data);
 
@@ -65,7 +71,7 @@ routerProveedores.get('/getSupplier/:id', async (req, res) => {
 
     const id=req.params.id;
 
-    response1 = await axios.get(`${direccionNodoConsenso}/api/logistica/suppliers/Supplier/${id}`);
+    response1 = await axios.get(`${direccionNodoConsenso}/api/logistica/suppliers/Supplier/${id}`,{ headers });
 
     res.status(200).json(response1.data);
 
@@ -78,7 +84,7 @@ routerProveedores.put('/modifySupplier/:id', async (req, res) => {
 
     const id=req.params.id;
 
-    response1 = await axios.put(`${direccionNodoConsenso}/api/logistica/suppliers/ModifySupplier/${id}`,req.body);
+    response1 = await axios.put(`${direccionNodoConsenso}/api/logistica/suppliers/ModifySupplier/${id}`,req.body, { headers });
     
     if (response1.status = 200) {
         console.log("Los servidores recibieron la información de manera correcta");

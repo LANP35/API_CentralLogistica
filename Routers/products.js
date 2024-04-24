@@ -18,14 +18,22 @@ routerProducts.use(express.json());
 const {direccionNodoConsenso}=require('../variables');
 
 
+//--------------------Configurar Api Key--------------------
+
+const headers = {
+    'api-key': 'Password783'
+  };
+
 //----------------------------------Peticiones---------------------
+
+
 
 //Registrar un producto
 
 routerProducts.post('/registerProduct', async (req, res) => {
 
     //Enviar informacion a los nodos
-    response1 = await axios.post(`${direccionNodoConsenso}/api/logistica/products/newProduct`, req.body);
+    response1 = await axios.post(`${direccionNodoConsenso}/api/logistica/products/newProduct`, req.body, { headers });
 
     //-------------------------------Final-----------------------------
 
@@ -42,7 +50,7 @@ routerProducts.post('/registerProduct', async (req, res) => {
 
 routerProducts.get('/getProducts', async (req, res) => {
 
-    response1 = await axios.get(`${direccionNodoConsenso}/api/logistica/products/getAllProducts`);
+    response1 = await axios.get(`${direccionNodoConsenso}/api/logistica/products/getAllProducts`,{ headers });
 
     res.status(200).json(response1.data);
 
@@ -54,7 +62,7 @@ routerProducts.get('/getProduct/:id', async (req, res) => {
 
     const id=req.params.id;
 
-    response1 = await axios.get(`${direccionNodoConsenso}/api/logistica/products/Product/${id}`);
+    response1 = await axios.get(`${direccionNodoConsenso}/api/logistica/products/Product/${id}`,{ headers });
 
     console.log("Enviando datos");
     console.log(response1.data);
@@ -70,7 +78,7 @@ routerProducts.put('/modifyProduct/:id', async (req, res) => {
 
     const id=req.params.id;
 
-    response1 = await axios.put(`${direccionNodoConsenso}/api/logistica/products/ModifyProduct/${id}`,req.body);
+    response1 = await axios.put(`${direccionNodoConsenso}/api/logistica/products/ModifyProduct/${id}`,req.body,{ headers });
     
     if (response1.status = 200) {
         console.log("Los servidores recibieron la información de manera correcta");
