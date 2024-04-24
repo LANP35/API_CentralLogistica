@@ -3,16 +3,26 @@ const app = express();
 const cors = require('cors');
 const PORT = 3002;
 
-/*
-const {routerLogin}= require('./Routers/login.js');
-const {routerRegUser}=require('./Routers/register.js');
-const {routerGestionUsuario}=require('./Routers/gestionUsuarios.js');
-*/
+
 const {routerProveedores}=require('./Routers/supplier');
 const {routerPurchaseOrders}=require('./Routers/purchaseOrder');
 const {routerProducts}=require('./Routers/products');
 
 app.use(cors());
+
+// Middleware para verificar la API key
+const apiKeyMiddleware = (req, res, next) => {
+  const apiKey = req.headers['api-key'];
+
+  if (apiKey && apiKey === "Password782") {
+      next(); // Clave válida, pasa al siguiente middleware o ruta
+  } else {
+      console.log(apiKey);
+      res.status(401).json({ error: 'Api Key incorrecto' });
+  }
+};
+
+app.use(apiKeyMiddleware);
 
 //Routers
 app.use('/api/supplier/', routerProveedores);
