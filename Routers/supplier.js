@@ -15,13 +15,14 @@ routerProveedores.use(express.json());
 
 //------------------Dirección de nodos-----------------:
 
-const {direccionNodoConsenso}=require('../variables');
+const {direccionNodoConsenso,certificadoDigital}=require('../variables');
 
 
 //--------------------Configurar Api Key--------------------
 
 const headers = {
-    'api-key': 'Password783'
+    'api-key': 'Password783',
+    'cert-dig': JSON.stringify(certificadoDigital)
   };
 
 //----------------------------------Peticiones---------------------
