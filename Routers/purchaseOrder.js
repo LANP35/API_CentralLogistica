@@ -76,7 +76,7 @@ Gracias por su tiempo, espero su confirmación de la Orden
 
 
     //Enviar informacion a los nodos
-    response1 = await axios.post(`${direccionNodoConsenso}/api/logistica/purchaseOrders/newPurchaseOrder`, req.body.doc1, { headers });
+    response1 = await axios.post(direccionNodoConsenso+"/api/logistica/purchaseOrders/newPurchaseOrder", req.body.doc1, { headers });
 
     //-------------------------------Final-----------------------------
 
@@ -94,7 +94,7 @@ Gracias por su tiempo, espero su confirmación de la Orden
 //Obtener todas las ordenes de compras
 routerPurchaseOrders.get('/getPurchaseOrders', async (req, res) => {
 
-    response1 = await axios.get(`${direccionNodoConsenso}/api/logistica/purchaseOrders/getPurchaseOrders`,{ headers });
+    response1 = await axios.get(direccionNodoConsenso+"/api/logistica/purchaseOrders/getPurchaseOrders",{ headers });
 
     res.status(200).json(response1.data);
 
@@ -106,7 +106,7 @@ routerPurchaseOrders.get('/getPuchaseOrder/:id', async (req, res) => {
 
     const id = req.params.id;
 
-    response1 = await axios.get(`${direccionNodoConsenso}/api/logistica/purchaseOrders/purchaseOrder/${id}`,{ headers });
+    response1 = await axios.get(direccionNodoConsenso+"/api/logistica/purchaseOrders/purchaseOrder/"+id,{ headers });
 
     res.status(200).json(response1.data);
 
@@ -119,7 +119,7 @@ routerPurchaseOrders.put('/modifyPurchaseOrder/:id', async (req, res) => {
 
     const id = req.params.id;
 
-    response1 = await axios.put(`${direccionNodoConsenso}/api/logistica/purchaseOrders/modifyPurchaseOrder/${id}`, req.body, { headers });
+    response1 = await axios.put(direccionNodoConsenso+"/api/logistica/purchaseOrders/modifyPurchaseOrder/"+id, req.body, { headers });
 
     if (response1.status = 200) {
         console.log("Los servidores recibieron la información de manera correcta");

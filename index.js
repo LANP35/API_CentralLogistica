@@ -30,7 +30,8 @@ app.use('/api/purchaseOrder/', routerPurchaseOrders);
 app.use('/api/products/', routerProducts);
 
 app.get('/test', async (req, res) => {
-
+  
+  console.log("Actualizado");
   res.status(200).json({"message":"ok"});
 
 });

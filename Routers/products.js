@@ -34,7 +34,7 @@ const headers = {
 routerProducts.post('/registerProduct', async (req, res) => {
 
     //Enviar informacion a los nodos
-    response1 = await axios.post(`${direccionNodoConsenso}/api/logistica/products/newProduct`, req.body, { headers });
+    response1 = await axios.post(direccionNodoConsenso+"/api/logistica/products/newProduct", req.body, { headers });
 
     //-------------------------------Final-----------------------------
 
@@ -51,7 +51,7 @@ routerProducts.post('/registerProduct', async (req, res) => {
 
 routerProducts.get('/getProducts', async (req, res) => {
 
-    response1 = await axios.get(`${direccionNodoConsenso}/api/logistica/products/getAllProducts`,{ headers });
+    response1 = await axios.get(direccionNodoConsenso+"/api/logistica/products/getAllProducts",{ headers });
 
     res.status(200).json(response1.data);
 
@@ -63,7 +63,7 @@ routerProducts.get('/getProduct/:id', async (req, res) => {
 
     const id=req.params.id;
 
-    response1 = await axios.get(`${direccionNodoConsenso}/api/logistica/products/Product/${id}`,{ headers });
+    response1 = await axios.get(direccionNodoConsenso+"/api/logistica/products/Product/"+id,{ headers });
 
     console.log("Enviando datos");
     console.log(response1.data);
@@ -79,7 +79,7 @@ routerProducts.put('/modifyProduct/:id', async (req, res) => {
 
     const id=req.params.id;
 
-    response1 = await axios.put(`${direccionNodoConsenso}/api/logistica/products/ModifyProduct/${id}`,req.body,{ headers });
+    response1 = await axios.put(direccionNodoConsenso+"/api/logistica/products/ModifyProduct/"+id,req.body,{ headers });
     
     if (response1.status = 200) {
         console.log("Los servidores recibieron la información de manera correcta");
