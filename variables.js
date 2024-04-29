@@ -1,6 +1,14 @@
-//const direccionNodoConsenso="http://192.168.18.108:3000";
+
 //const direccionNodoConsenso="http://127.0.0.1:3000";
 const direccionNodoConsenso="https://five-server-consenso.onrender.com";
+
+
+//const direccionNodeExecutive="http://127.0.0.1:3008";
+const direccionNodeExecutive="https://api-nodeexecutive.onrender.com";
+
+//const direccionNodeLogistics="http://127.0.0.1:3010";
+const direccionNodeLogistics="https://api-nodelogistics.onrender.com"
+
 
 const certificadoDigital={
     details: {
@@ -13,5 +21,7 @@ const certificadoDigital={
 
 module.exports={
     certificadoDigital,
-    direccionNodoConsenso
+    direccionNodoConsenso,
+    direccionNodeLogistics,
+    direccionNodeExecutive
 }
