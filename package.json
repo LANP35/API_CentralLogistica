@@ -14,6 +14,7 @@
     "cors": "^2.8.5",
     "cradle": "^0.7.1",
     "express": "^4.19.2",
+    "moment-timezone": "^0.5.45",
     "nodemailer": "^6.9.13"
   }
 }

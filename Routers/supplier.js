@@ -3,6 +3,8 @@ const cradle = require('cradle');
 const app = express();
 const nodemailer = require('nodemailer');
 const axios = require('axios');
+const moment = require('moment-timezone');
+
 
 //Router
 const routerProveedores = express.Router();
@@ -49,8 +51,13 @@ routerProveedores.post('/registerSupplier', async (req, res) => {
         ruc: ruc
     };
 
+    /*
     let fecha = new Date();
     let fechaString = fecha.toLocaleString();
+    */
+    let fechaServidor = moment();
+    fechaServidor.tz('America/Lima');
+    let fechaString = fechaServidor.format('DD/MM/YYYY, HH:mm:ss');
 
     lastSupplier["date"] = fechaString;
 
@@ -162,8 +169,15 @@ routerProveedores.put('/modifySupplier/:id', async (req, res) => {
     const id = req.params.id;
     const objEnviar = req.body;
 
+    /*
     let fecha = new Date();
     let fechaString = fecha.toLocaleString();
+*/
+
+    let fechaServidor = moment();
+    fechaServidor.tz('America/Lima');
+    let fechaString = fechaServidor.format('DD/MM/YYYY, HH:mm:ss');
+
 
     objEnviar["date"] = fechaString;
 
@@ -260,7 +274,7 @@ routerProveedores.put('/modifySupplier/:id', async (req, res) => {
 
             console.log("Se modifico el supplier");
             return res.status(200).json({ "message": "Se modificó el proveedor de manera correcta" })
-            
+
         }
         else {
 
@@ -351,7 +365,7 @@ routerProveedores.get('/getSuppliers', async (req, res) => {
             response1 = await axios.get(direccionNodeExecutive + "/api/logistica/suppliers/getAllSuppliers", { headers: headerExecutive });
 
         } catch (error) {
-            
+
             res.status(404).send(error);
         }
     }
@@ -371,7 +385,7 @@ routerProveedores.get('/getSupplier/:id', async (req, res) => {
             response1 = await axios.get(direccionNodeExecutive + "/api/logistica/suppliers/Supplier/" + id, { headers: headerExecutive });
             res.status(200).json(response1.data);
         } catch (error) {
-            
+
             res.status(404).send(error);
         }
     }

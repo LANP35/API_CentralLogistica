@@ -4,6 +4,8 @@ const app = express();
 const nodemailer = require('nodemailer');
 const axios = require('axios');
 const { transporter } = require('../mensaje.js');
+const moment = require('moment-timezone');
+
 //Router
 
 const routerPurchaseOrders = express.Router();
@@ -47,19 +49,25 @@ routerPurchaseOrders.post('/registerPurchaseOrder', async (req, res) => {
     //Obtener variables
     const { nombreProveedor, fechaOrden, infoRecepcion, total, orderDetails } = req.body.doc1;
     //Enviar Correo
-    enviarCorreoPurchaseOrder(nombreProveedor, fechaOrden, infoRecepcion, total, orderDetails,email);
+    enviarCorreoPurchaseOrder(nombreProveedor, fechaOrden, infoRecepcion, total, orderDetails, email);
 
     //-------------Procesamiento de la información-------------------
-    let objEnviar=req.body.doc1;
+    let objEnviar = req.body.doc1;
 
+    /*
     let fecha = new Date();
     let fechaString = fecha.toLocaleString();
+*/
+
+    let fechaServidor = moment();
+    fechaServidor.tz('America/Lima');
+    let fechaString = fechaServidor.format('DD/MM/YYYY, HH:mm:ss');
 
     objEnviar["date"] = fechaString;
 
     //Enviar informacion a los nodos
     try {
-        response1 = await axios.post(direccionNodoConsenso+"/api/logistica/purchaseOrders/newPurchaseOrder", objEnviar , { headers: headerconsenso });
+        response1 = await axios.post(direccionNodoConsenso + "/api/logistica/purchaseOrders/newPurchaseOrder", objEnviar, { headers: headerconsenso });
     } catch (error) {
         console.log("Error al hacer la petición");
         response1 = { status: 404, data: "123" };
@@ -67,7 +75,7 @@ routerPurchaseOrders.post('/registerPurchaseOrder', async (req, res) => {
     }
 
     try {
-        response2 = await axios.post(direccionNodeExecutive+"/api/logistica/purchaseOrders/newPurchaseOrder", objEnviar , { headers: headerExecutive });
+        response2 = await axios.post(direccionNodeExecutive + "/api/logistica/purchaseOrders/newPurchaseOrder", objEnviar, { headers: headerExecutive });
     } catch (error) {
         console.log("Error al hacer la petición");
         response2 = { status: 404, data: "123" };
@@ -75,7 +83,7 @@ routerPurchaseOrders.post('/registerPurchaseOrder', async (req, res) => {
     }
 
     try {
-        response3 = await axios.post(direccionNodeLogistics+"/api/logistica/purchaseOrders/newPurchaseOrder", objEnviar , { headers: headerLogistics });
+        response3 = await axios.post(direccionNodeLogistics + "/api/logistica/purchaseOrders/newPurchaseOrder", objEnviar, { headers: headerLogistics });
     } catch (error) {
         console.log("Error al hacer la petición");
         response3 = { status: 404, data: "123" };
@@ -83,8 +91,8 @@ routerPurchaseOrders.post('/registerPurchaseOrder', async (req, res) => {
     }
 
 
-     //--------------Verificar Consistencia de todos los nodos----------------
-     {
+    //--------------Verificar Consistencia de todos los nodos----------------
+    {
         if (JSON.stringify(response1.data) == JSON.stringify(response3.data)
             && JSON.stringify(response2.data) == JSON.stringify(response3.data)
             && JSON.stringify(response1.data) == JSON.stringify(response2.data)
@@ -155,9 +163,9 @@ routerPurchaseOrders.post('/registerPurchaseOrder', async (req, res) => {
 
 
 
-function enviarCorreoPurchaseOrder(nombreProveedor, fechaOrden, infoRecepcion, total, orderDetails,email){
-//Crear Cuerpo del correo:
-let bodyMessage = `
+function enviarCorreoPurchaseOrder(nombreProveedor, fechaOrden, infoRecepcion, total, orderDetails, email) {
+    //Crear Cuerpo del correo:
+    let bodyMessage = `
 
 ¡Hola ${nombreProveedor}!
 
@@ -261,11 +269,11 @@ function TransaccionErronea(objEnviar) {
 routerPurchaseOrders.get('/getPurchaseOrders', async (req, res) => {
 
     try {
-        response1 = await axios.get(direccionNodoConsenso+"/api/logistica/purchaseOrders/getPurchaseOrders",{ headers: headerconsenso });
+        response1 = await axios.get(direccionNodoConsenso + "/api/logistica/purchaseOrders/getPurchaseOrders", { headers: headerconsenso });
 
     } catch (error) {
         try {
-            response1 = await axios.get(direccionNodeExecutive+"/api/logistica/purchaseOrders/getPurchaseOrders",{ headers: headerExecutive });
+            response1 = await axios.get(direccionNodeExecutive + "/api/logistica/purchaseOrders/getPurchaseOrders", { headers: headerExecutive });
 
         } catch (error) {
 
@@ -283,11 +291,11 @@ routerPurchaseOrders.get('/getPuchaseOrder/:id', async (req, res) => {
     const id = req.params.id;
 
     try {
-        response1 = await axios.get(direccionNodoConsenso+"/api/logistica/purchaseOrders/purchaseOrder/"+id,{ headers: headerconsenso });
+        response1 = await axios.get(direccionNodoConsenso + "/api/logistica/purchaseOrders/purchaseOrder/" + id, { headers: headerconsenso });
 
     } catch (error) {
         try {
-            response1 = await axios.get(direccionNodeExecutive+"/api/logistica/purchaseOrders/purchaseOrder/"+id,{ headers: headerExecutive });
+            response1 = await axios.get(direccionNodeExecutive + "/api/logistica/purchaseOrders/purchaseOrder/" + id, { headers: headerExecutive });
 
         } catch (error) {
 

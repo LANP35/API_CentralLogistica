@@ -3,6 +3,7 @@ const cradle = require('cradle');
 const app = express();
 const nodemailer = require('nodemailer');
 const axios = require('axios');
+const moment = require('moment-timezone');
 
 //Router
 const routerProducts = express.Router();
@@ -45,8 +46,14 @@ routerProducts.post('/registerProduct', async (req, res) => {
 
     const objEnviar = req.body;
 
+    /*
     let fecha = new Date();
     let fechaString = fecha.toLocaleString();
+*/
+
+    let fechaServidor = moment();
+    fechaServidor.tz('America/Lima');
+    let fechaString = fechaServidor.format('DD/MM/YYYY, HH:mm:ss');
 
     objEnviar["date"] = fechaString;
 
@@ -162,8 +169,13 @@ routerProducts.put('/modifyProduct/:id', async (req, res) => {
     const id = req.params.id;
     const objEnviar = req.body;
 
+    /*
     let fecha = new Date();
     let fechaString = fecha.toLocaleString();
+    */
+    let fechaServidor = moment();
+    fechaServidor.tz('America/Lima');
+    let fechaString = fechaServidor.format('DD/MM/YYYY, HH:mm:ss');
 
     objEnviar["date"] = fechaString;
 
