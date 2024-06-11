@@ -149,7 +149,7 @@ routerProducts.post('/registerProduct', async (req, res) => {
             fechaServidor2.tz('America/Lima');
             let fechaString2 = fechaServidor2.format('DD/MM/YYYY, HH:mm:ss');
 
-            let diferencia = fecha2.diff(fecha1);
+            let diferencia = fechaServidor2.diff(fechaServidor);
             let duration = moment.duration(diferencia);
             let diferenciaString = `El tiempo de procesamiento del registro del producto es: ${duration.hours()} horas, ${duration.minutes()} minutos, ${duration.seconds()} segundos, ${duration.milliseconds()} milisegundos`;
 
