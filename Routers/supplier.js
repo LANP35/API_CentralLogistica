@@ -157,7 +157,7 @@ routerProveedores.post('/registerSupplier', async (req, res) => {
 
             let diferencia = fechaServidor2.diff(fechaServidor);
             let duration = moment.duration(diferencia);
-            let diferenciaString = `El tiempo de procesamiento del registro del producto es: ${duration.hours()} horas, ${duration.minutes()} minutos, ${duration.seconds()} segundos, ${duration.milliseconds()} milisegundos`;
+            let diferenciaString = `El tiempo de procesamiento del registro de un proveedor es: ${duration.hours()} horas, ${duration.minutes()} minutos, ${duration.seconds()} segundos, ${duration.milliseconds()} milisegundos`;
 
             console.log(diferenciaString);
 
