@@ -67,7 +67,7 @@ routerProveedores.post('/registerSupplier', async (req, res) => {
         response1 = await axios.post(direccionNodoConsenso + "/api/logistica/suppliers/newSupplier", lastSupplier, { headers: headerconsenso });
 
     } catch (error) {
-        console.log("Error al hacer la petición");
+        //console.log("Error al hacer la petición");
         response1 = { status: 404, data: "123" };
         MensajeNodeOffline(error, "Node Consensus");
     }
@@ -76,7 +76,7 @@ routerProveedores.post('/registerSupplier', async (req, res) => {
         response2 = await axios.post(direccionNodeExecutive + "/api/logistica/suppliers/newSupplier", lastSupplier, { headers: headerExecutive });
 
     } catch (error) {
-        console.log("Error al hacer la petición");
+       // console.log("Error al hacer la petición");
         response1 = { status: 404, data: "123" };
         MensajeNodeOffline(error, "Node Executive");
     }
@@ -85,7 +85,7 @@ routerProveedores.post('/registerSupplier', async (req, res) => {
         response3 = await axios.post(direccionNodeLogistics + "/api/logistica/suppliers/newSupplier", lastSupplier, { headers: headerLogistics });
 
     } catch (error) {
-        console.log("Error al hacer la petición");
+        //console.log("Error al hacer la petición");
         response1 = { status: 404, data: "123" };
         MensajeNodeOffline(error, "Node Logistics");
     }
@@ -96,9 +96,9 @@ routerProveedores.post('/registerSupplier', async (req, res) => {
             && JSON.stringify(response2.data) == JSON.stringify(response3.data)
             && JSON.stringify(response1.data) == JSON.stringify(response2.data)
         ) {
-            console.log("Todos concuerdan");
+           // console.log("Todos concuerdan");
         } else {
-            console.log("No concuerdan todos");
+            //console.log("No concuerdan todos");
             //Envia mensaje
             noConcuerdanTodos(response1.data, response2.data, response3.data);
             return res.status(404).json({ "messageError": "No se pudo procesar la transacción" });
@@ -106,7 +106,7 @@ routerProveedores.post('/registerSupplier', async (req, res) => {
     }
 
     {
-        console.log("Enviando información a los bloques");
+       // console.log("Enviando información a los bloques");
 
         let bloqueComun;
 
@@ -151,7 +151,17 @@ routerProveedores.post('/registerSupplier', async (req, res) => {
                 MensajeNodeOffline(error, "Node Logistics");
             }
 
-            console.log("Transferencia Correcta");
+            let fechaServidor2 = moment();
+            fechaServidor2.tz('America/Lima');
+            let fechaString2 = fechaServidor2.format('DD/MM/YYYY, HH:mm:ss');
+
+            let diferencia = fecha2.diff(fecha1);
+            let duration = moment.duration(diferencia);
+            let diferenciaString = `El tiempo de procesamiento del registro del proveedor es: ${duration.hours()} horas, ${duration.minutes()} minutos, ${duration.seconds()} segundos, ${duration.milliseconds()} milisegundos`;
+
+            console.log(diferenciaString);
+
+           // console.log("Transferencia Correcta");
             return res.status(200).json({ "message": "Todo Correcto" });
         }
         else {
@@ -215,9 +225,9 @@ routerProveedores.put('/modifySupplier/:id', async (req, res) => {
             && JSON.stringify(response2.data) == JSON.stringify(response3.data)
             && JSON.stringify(response1.data) == JSON.stringify(response2.data)
         ) {
-            console.log("Todos concuerdan");
+            //console.log("Todos concuerdan");
         } else {
-            console.log("No concuerdan todos");
+            //console.log("No concuerdan todos");
             //Envia mensaje
             noConcuerdanTodos(response1.data, response2.data, response3.data);
             return res.status(404).json({ "messageError": "No se pudo procesar la transacción" });
@@ -225,7 +235,7 @@ routerProveedores.put('/modifySupplier/:id', async (req, res) => {
     }
 
     {
-        console.log("Enviando información a los bloques");
+        //console.log("Enviando información a los bloques");
 
         let bloqueComun;
 
@@ -254,25 +264,25 @@ routerProveedores.put('/modifySupplier/:id', async (req, res) => {
             try {
                 let responseConsenso = await axios.post(direccionNodoConsenso + "/api/logistica/suppliers/addBlockModify/" + id, bloqueComun, { headers: headerconsenso });
             } catch (error) {
-                console.log("Hubo un error");
+                //console.log("Hubo un error");
                 MensajeNodeOffline(error, "Node Consensus");
             }
 
             try {
                 let responseExecutive = await axios.post(direccionNodeExecutive + "/api/logistica/suppliers/addBlockModify/" + id, bloqueComun, { headers: headerExecutive });
             } catch (error) {
-                console.log("Hubo un error");
+                //console.log("Hubo un error");
                 MensajeNodeOffline(error, "Node Consensus");
             }
 
             try {
                 let responseLogistics = await axios.post(direccionNodeLogistics + "/api/logistica/suppliers/addBlockModify/" + id, bloqueComun, { headers: headerLogistics });
             } catch (error) {
-                console.log("Hubo un error");
+                //console.log("Hubo un error");
                 MensajeNodeOffline(error, "Node Consensus");
             }
 
-            console.log("Se modifico el supplier");
+            //console.log("Se modifico el supplier");
             return res.status(200).json({ "message": "Se modificó el proveedor de manera correcta" })
 
         }
@@ -307,7 +317,7 @@ function MensajeNodeOffline(error, nombreNodo) {
             if (error) {
                 console.error('Error al enviar el correo electrónico:', error);
             } else {
-                console.log('Correo electrónico enviado:', info.response);
+                //console.log('Correo electrónico enviado:', info.response);
             }
         });
     } else {
@@ -326,7 +336,7 @@ function noConcuerdanTodos(a, b, c) {
         if (error) {
             console.error('Error al enviar el correo electrónico:', error);
         } else {
-            console.log('Correo electrónico enviado:', info.response);
+            //console.log('Correo electrónico enviado:', info.response);
         }
     });
 }
@@ -343,7 +353,7 @@ function TransaccionErronea(objEnviar) {
         if (error) {
             console.error('Error al enviar el correo electrónico:', error);
         } else {
-            console.log('Correo electrónico enviado:', info.response);
+            //console.log('Correo electrónico enviado:', info.response);
         }
     });
 }

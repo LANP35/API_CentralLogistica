@@ -69,7 +69,7 @@ routerPurchaseOrders.post('/registerPurchaseOrder', async (req, res) => {
     try {
         response1 = await axios.post(direccionNodoConsenso + "/api/logistica/purchaseOrders/newPurchaseOrder", objEnviar, { headers: headerconsenso });
     } catch (error) {
-        console.log("Error al hacer la petición");
+        //console.log("Error al hacer la petición");
         response1 = { status: 404, data: "123" };
         MensajeNodeOffline(error, "Node Consensus");
     }
@@ -77,7 +77,7 @@ routerPurchaseOrders.post('/registerPurchaseOrder', async (req, res) => {
     try {
         response2 = await axios.post(direccionNodeExecutive + "/api/logistica/purchaseOrders/newPurchaseOrder", objEnviar, { headers: headerExecutive });
     } catch (error) {
-        console.log("Error al hacer la petición");
+       // console.log("Error al hacer la petición");
         response2 = { status: 404, data: "123" };
         MensajeNodeOffline(error, "Node Executive");
     }
@@ -85,7 +85,7 @@ routerPurchaseOrders.post('/registerPurchaseOrder', async (req, res) => {
     try {
         response3 = await axios.post(direccionNodeLogistics + "/api/logistica/purchaseOrders/newPurchaseOrder", objEnviar, { headers: headerLogistics });
     } catch (error) {
-        console.log("Error al hacer la petición");
+       // console.log("Error al hacer la petición");
         response3 = { status: 404, data: "123" };
         MensajeNodeOffline(error, "Node Logistics");
     }
@@ -97,9 +97,9 @@ routerPurchaseOrders.post('/registerPurchaseOrder', async (req, res) => {
             && JSON.stringify(response2.data) == JSON.stringify(response3.data)
             && JSON.stringify(response1.data) == JSON.stringify(response2.data)
         ) {
-            console.log("Todos concuerdan");
+            //console.log("Todos concuerdan");
         } else {
-            console.log("No concuerdan todos");
+           // console.log("No concuerdan todos");
             //Envia mensaje
             noConcuerdanTodos(response1.data, response2.data, response3.data);
             return res.status(404).json({ "messageError": "No se pudo procesar la transacción" });
@@ -107,7 +107,7 @@ routerPurchaseOrders.post('/registerPurchaseOrder', async (req, res) => {
     }
 
     {
-        console.log("Enviando información a los bloques");
+       // console.log("Enviando información a los bloques");
 
         let bloqueComun;
 
@@ -151,7 +151,7 @@ routerPurchaseOrders.post('/registerPurchaseOrder', async (req, res) => {
                 MensajeNodeOffline(error, "Node Logistics");
             }
 
-            console.log("Transferencia Correcta");
+            //console.log("Transferencia Correcta");
             return res.status(200).json({ "message": "Todo Correcto" });
         }
         else {
@@ -195,7 +195,7 @@ Gracias por su tiempo, espero su confirmación de la Orden
         if (error) {
             console.error('Error al enviar el correo electrónico:', error);
         } else {
-            console.log('Correo electrónico enviado:', info.response);
+          //  console.log('Correo electrónico enviado:', info.response);
         }
     });
 
@@ -220,7 +220,7 @@ function MensajeNodeOffline(error, nombreNodo) {
             if (error) {
                 console.error('Error al enviar el correo electrónico:', error);
             } else {
-                console.log('Correo electrónico enviado:', info.response);
+                //console.log('Correo electrónico enviado:', info.response);
             }
         });
     } else {
@@ -239,7 +239,7 @@ function noConcuerdanTodos(a, b, c) {
         if (error) {
             console.error('Error al enviar el correo electrónico:', error);
         } else {
-            console.log('Correo electrónico enviado:', info.response);
+           // console.log('Correo electrónico enviado:', info.response);
         }
     });
 }
@@ -256,7 +256,7 @@ function TransaccionErronea(objEnviar) {
         if (error) {
             console.error('Error al enviar el correo electrónico:', error);
         } else {
-            console.log('Correo electrónico enviado:', info.response);
+           // console.log('Correo electrónico enviado:', info.response);
         }
     });
 }

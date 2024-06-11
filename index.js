@@ -17,7 +17,7 @@ const apiKeyMiddleware = (req, res, next) => {
   if (apiKey && apiKey === "Password782") {
       next(); // Clave válida, pasa al siguiente middleware o ruta
   } else {
-      console.log(apiKey);
+      //console.log(apiKey);
       res.status(401).json({ error: 'Api Key incorrecto' });
   }
 };
@@ -31,7 +31,7 @@ app.use('/api/products/', routerProducts);
 
 app.get('/test', async (req, res) => {
   
-  console.log("Actualizado");
+  //console.log("Actualizado");
   res.status(200).json({"message":"ok"});
 
 });
